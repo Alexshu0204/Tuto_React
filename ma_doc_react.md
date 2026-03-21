@@ -8,6 +8,7 @@ _Note : ce tuto se portera uniquement sur Vite + React._
 
 [1) Qu'est-ce que React ?](#1-Qu'est-ce-que-React-)
 [2) Les installations](#2-Les-installations)
+[3) Les composants](#3-Les-composants)
 
 ### 1) Qu'est-ce que React ?
 
@@ -284,3 +285,5 @@ export default App
 On peut voir "Bienvenue sur notre application React !" surligné en rouge :
 
 ![Aperçu](./images/screenshot_5.png)
+
+### 3) Les composants
