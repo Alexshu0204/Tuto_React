@@ -6,11 +6,29 @@ _Note : ce tuto se portera uniquement sur Vite + React._
 
 ## Table des matières
 
-[1) Les installations](#1-Les-installations)
+[1) Qu'est-ce que React ?](#1-Qu'est-ce-que-React-)
+[2) Les installations](#2-Les-installations)
 
-### 1) Les installations
+### 1) Qu'est-ce que React ?
+
+**React** est une bibliothèque JavaScript pour construire des interfaces utilisateur interactives. Voici pourquoi j'ai choisi de l'apprendre :
+
+**Accessibilité et popularité** — React est la bibliothèque front-end la plus utilisée au monde. L'écosystème est massif, la communauté très active, et les ressources pour débuter sont abondantes. C'est un choix sûr pour progresser rapidement même en tant que débutant.
+
+**Organisation et réutilisabilité** — Contrairement aux projets vanilla (HTML/CSS/JS séparés), React utilise les **composants réutilisables**. Un bouton, un formulaire, une card — je les crée une fois et les réutilise partout. Fini la duplication de code !
+
+**JSX : le meilleur des deux mondes** — React permet d'écrire du JavaScript et du HTML ensemble dans une syntaxe appelée **JSX** (ou TSX pour TypeScript). C'est intuitif et plus lisible qu'une architecture traditionnelle.
+
+**Single Page Application (SPA)** — React construit des applications avec une seule page HTML. Au lieu de créer 10 fichiers HTML séparés, une application React gère le rendu dynamiquement. Plus léger, plus rapide, plus efficace.
+
+**Les Hooks** — Avec les hooks (comme `useState` et `useEffect`), je peux gérer l'état et les effets directement dans mes composants de façon élégante. C'est puissant et c'est quelque chose que je veux maîtriser.
+
+**En résumé** — React m'enseigne comment structurer une application front-end de façon professionnelle, tout en restant accessible pour un débutant.
+
+### 2) Les installations
 
 Prériquis :
+- avoir installer Node JS et Tailwind CSS
 - créer un projet et installer Vite + React
 
 Pour installer Vite, tape `npm create vite@latest`.
@@ -20,7 +38,7 @@ Il demandera également de choisir un framework (donc React pour nous) et ensuit
 
 ![Aperçu](./images/screenshot_1.png)
 
-On peut à présent ouvrir l’éditeur de code.
+**On peut à présent ouvrir l’éditeur de code.**
 
 Voici les fichiers de départ :
 
@@ -66,29 +84,31 @@ Voici l'explication du rôle de chaque fichier dans ce projet React + Vite :
 - **assets** : Dossier pour ranger les ressources (images, fonts, etc.) du projet
 
 
-Lancer le server `npm run dev`
+**Lancer le server** `npm run dev`
 
 Ça montre cet interface par défaut :
 
 ![Aperçu](./images/screenshot_3.png)
 
-Nous allons retirer l'UI de Vite.
+**Nous allons retirer l'UI de Vite.**
 
-Dans Aps.jsx `src/assets/App.jsx` :
+Dans `App.jsx` - `src/assets/App.jsx` :
 
 ```jsx
 import { useState } from 'react'
+// Supprimer ces imports
 import reactLogo from './assets/react.svg'
 import viteLogo from './assets/vite.svg'
 import heroImg from './assets/hero.png'
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
+  // Supprimer ce state
+  const [count, setCount] = useState(0) 
 
   return (
     <>
-      {/* On peut tout retirer à partir de cette ligne */}
+      {/* On peut aussi tout retirer à partir de cette ligne */}
       <section id="center">
         <div className="hero">
           <img src={heroImg} className="base" width="170" height="179" alt="" />
@@ -200,3 +220,67 @@ function App() {
 
 export default App
 ```
+**Ça donne ça :**
+
+```jsx
+import { useState } from 'react'
+
+function App() {
+
+  return (
+    <>
+      {/* Ajouter un p'tit mot de bienvenue */}
+      <h1>Bienvenue sur notre application React !</h1>
+    </>
+  )
+}
+
+export default App
+
+```
+![Aperçu](./images/screenshot_4.png)
+
+
+**Ensuite on va suprimer `App.css` dans** `src/assets/App.css` **qui était appliqué à l'interface par défaut.**
+
+Puis dans `src/assets/index.css`, **on va retirer tout le contenu du fichier `index.css`**.
+
+Pourquoi on supprime les lignes css ? Car nous allons utiliser **Tailwind CSS**.
+
+**La raison ?**
+
+Tailwind CSS offre une meilleure productivité en comparaison au CSS classique. Les avantages principaux :
+- **Directement dans le JSX** : Classes utilitaires appliquées directement sur les élements
+- **Pas de conflits de noms** : Classes pré-définies évitent les collisions
+- **Bundle optimisé** : Seules les classes utilisées sont incluses en production
+- **Responsive natif** : Breakpoints intégrés (`md:`, `lg:`, etc.)
+- **États visuels faciles** : `hover:`, `focus:`, `dark:` pour les interactions
+- **Design system cohérent** : Palette de couleurs et espacements uniformes
+
+### Pour installer Tailwind CSS :
+
+Se rendre directement dans la doc officielle de Tailwind et suivre les instructions (car les versions changent au fil du temps).
+
+Lien : https://tailwindcss.com/docs/installation/using-vite
+
+Maintenant qu'on a tailwind, on peux tester dans `App.jsx` - `src/assets/App.jsx` et rajouter une ligne :
+
+```jsx
+import { useState } from 'react'
+
+function App() {
+
+  return (
+    <div className="bg-red-500"> {/* Ajoute ici ta classe Tailwind à l'intérieur du <>*/}
+      {/* Ajouter un p'tit mot de bienvenue */}
+      <h1>Bienvenue sur notre application React !</h1>
+    </div>
+  )
+}
+
+export default App
+```
+
+On peut voir "Bienvenue sur notre application React !" surligné en rouge :
+
+![Aperçu](./images/screenshot_5.png)
