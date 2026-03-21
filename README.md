@@ -1,1 +1,1 @@
-Ouvrir le dossier pour lire mon guide.
+Ouvrir le dossier ou aller dans ma_doc_react.md pour lire mon guide.
