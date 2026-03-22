@@ -396,3 +396,65 @@ function Button({ variant, children }) {
 
 ## On va créer nos premiers composants
 
+Dans `App.jsx` - `src/assets/App.jsx` :
+
+Étape 1 :
+
+```jsx
+// Ajouter export default dans la fonction App
+export default function App() {
+
+  return (
+    <div className="bg-red-500"> {/* Ajoute ici ta classe Tailwind à l'intérieur du <>*/}
+      {/* Ajouter un p'tit mot de bienvenue */}
+      <h1>Bienvenue sur notre application React !</h1>
+    </div>
+  )
+}
+
+// Suprimer la ligne export default App (c’est juste une écriture plus courte et plus propre 
+// mais affichera une erreur sinon).
+```
+
+Étape 2, on va créer un composant lego :
+
+```jsx
+export default function App() {
+
+  return (
+    <div className="bg-red-500">
+      <h1>Bienvenue sur notre application React !</h1>
+    </div>
+  )
+}
+
+// Composant Lego après l'exportation de App
+function Lego() {
+  return <div className="bg-red-500 h-16 w-32"></div>;
+}
+```
+
+À ce moment là, on définit une fonction JS pour créer un composant React et dans cette fonction, on retourne du JSX.
+
+Étape 3, démonstration :
+
+```jsx
+export default function App() {
+
+  return (
+    <div className="bg-red-500">
+      {/* Ajouter d'autres composants ou éléments ici */}
+      <Lego /> {/* Attention à bien mettre le composant en majuscule */} 
+    </div>
+  )
+}
+
+// Composant Lego après l'exportation de App
+function Lego() {
+  return <div className="bg-red-500 h-16 w-32"></div>;
+}
+```
+
+Résultat :
+
+![Aperçu](./images/screenshot_6.png)
