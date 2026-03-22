@@ -6,9 +6,9 @@ _Note : ce tuto se portera uniquement sur Vite + React._
 
 ## Table des matières
 
-[1) Qu'est-ce que React ?](#1-Qu'est-ce-que-React-)
-[2) Les installations](#2-Les-installations)
-[3) Les composants](#3-Les-composants)
+- [1) Qu'est-ce que React ?](#1-Qu'est-ce-que-React-)
+- [2) Les installations](#2-Les-installations)
+- [3) Les composants](#3-Les-composants)
 
 ### 1) Qu'est-ce que React ?
 
@@ -84,7 +84,6 @@ Voici l'explication du rôle de chaque fichier dans ce projet React + Vite :
 
 - **assets** : Dossier pour ranger les ressources (images, fonts, etc.) du projet
 
-
 **Lancer le server** `npm run dev`
 
 Ça montre cet interface par défaut :
@@ -96,8 +95,8 @@ Voici l'explication du rôle de chaque fichier dans ce projet React + Vite :
 Dans `App.jsx` - `src/assets/App.jsx` :
 
 ```jsx
+// Supprimer tous ces imports
 import { useState } from 'react'
-// Supprimer ces imports
 import reactLogo from './assets/react.svg'
 import viteLogo from './assets/vite.svg'
 import heroImg from './assets/hero.png'
@@ -224,8 +223,6 @@ export default App
 **Ça donne ça :**
 
 ```jsx
-import { useState } from 'react'
-
 function App() {
 
   return (
@@ -287,3 +284,115 @@ On peut voir "Bienvenue sur notre application React !" surligné en rouge :
 ![Aperçu](./images/screenshot_5.png)
 
 ### 3) Les composants
+
+**Qu'est-ce qu'un composant React ?**
+
+Un composant React est une **fonction JavaScript réutilisable** qui retourne du JSX (un mélange de JavaScript et HTML). Chaque composant représente une partie de l'interface utilisateur qu'on peut utiliser autant de fois qu'on veut.
+
+Un composant c'est comme un bloc de construction — tu crées une fonction, elle retourne du markup, et tu peux la réutiliser partout dans ton app.
+
+**Exemple simple :**
+
+```jsx
+function Bouton() {
+  return <button>Cliquez-moi</button>
+}
+
+// Utilisation
+<Bouton />
+<Bouton />
+<Bouton />  // Trois boutons identiques !
+```
+
+**Exemples de composants courants :**
+
+- **Bouton** : Un bouton réutilisable avec du styling
+- **Card** : Une boîte avec titre, description et image
+- **Header/Navbar** : La barre de navigation en haut
+- **Footer** : Le pied de page
+- **Formulaire** : Un formulaire avec champs et validation
+- **Liste** : Affiche une liste d'éléments (posts, produits, etc.)
+- **Modal** : Une fenêtre popup
+- **Avatar** : Image de profil utilisateur
+- **Commentaire** : Un commentaire avec auteur et contenu
+
+**Pourquoi les composants c'est puissant ?**
+
+- **Réutilisabilité** : Crée une fois, utilise partout
+- **Maintenabilité** : Si tu dois changer un bouton, tu le fais à un seul endroit
+- **Clarté** : Ton code est organisé et facile à comprendre
+- **Modularité** : Tu peux composer des petits composants pour créer de grands composants
+
+### React vs JavaScript Vanilla
+
+La différence principale entre **React et JavaScript Vanilla** est la façon de gérer l'UI et l'état.
+
+Avec du **vanilla (HTML/CSS/JS pur)**, tu dois :
+- Manipuler le DOM directement avec `document.getElementById()`, `appendChild()`, etc.
+- Gérer manuellement les mises à jour : si une donnée change, tu dois trouver l'élément et le modifier à la main
+- Créer beaucoup de fichiers HTML séparés pour chaque page
+- Écrire beaucoup de code répétitif pour synchroniser l'état avec l'interface
+
+Avec **React**, tu :
+- Déclares l'UI avec des composants (fonctions JavaScript)
+- React gère automatiquement les mises à jour du DOM quand l'état change
+- Construis une Single Page Application où tout se passe sur une seule page HTML
+- Écris du code plus propre, plus lisible et moins répétitif
+
+**Exemple simple** : Si tu veux afficher un compteur qui s'incrémente au clic.
+
+*En Vanilla :*
+```javascript
+let count = 0;
+document.getElementById('button').addEventListener('click', () => {
+  count++;
+  document.getElementById('count').textContent = count;
+});
+```
+
+*En React :*
+```jsx
+function Compteur() {
+  const [count, setCount] = useState(0);
+  return (
+    <div>
+      <p>Count: {count}</p>
+      <button onClick={() => setCount(count + 1)}>Incrémenter</button>
+    </div>
+  );
+}
+```
+
+React c'est plus intuitif : tu décris l'UI une fois, et React s'occupe du reste ! 🚀
+
+Par ailleurs, on va pouvoir utiliser des **variants** (un concept très utilisé avec Tailwind / composants UI.) telles que :
+
+- `primary` → bouton principal
+- `secondary` → bouton secondaire
+- `ghost` → bouton transparent
+- `danger` → bouton rouge
+
+**Exemple avec un bouton :**
+
+```jsx
+function Button({ variant, children }) {
+  let style = ""
+
+  if (variant === "primary") {
+    style = "bg-blue-500 text-white"
+  } else if (variant === "secondary") {
+    style = "bg-gray-500 text-white"
+  } else if (variant === "ghost") {
+    style = "bg-transparent border border-gray-500"
+  }
+
+  return (
+    <button className={`px-4 py-2 rounded ${style}`}>
+      {children}
+    </button>
+  )
+}
+``` 
+
+## On va créer nos premiers composants
+
