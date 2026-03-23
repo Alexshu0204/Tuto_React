@@ -472,9 +472,9 @@ return (
 
 ![Aperçu](./images/screenshot_7.png)
 
-On est a créer notre **premier composant** ! Ce qui veut dire qu'on va pouvoir réutiliser **plusieurs fois**.
+On a créé notre **premier composant** ! Ce qui veut dire qu'on va pouvoir réutiliser **plusieurs fois**.
 
-Par exemple on peux s'amuser à dupliquer comme ceci :
+Par exemple, on peux s'amuser à dupliquer plusieurs fois comme ceci :
 
 ```jsx
 export default function App() {
@@ -495,3 +495,44 @@ function Lego() {
 }
 ```
 ![Aperçu](./images/screenshot_8.png)
+
+### Un autre concept intéressant en React avec les composants, on peux les faire passer des props (propriétés).
+
+Qu’est-ce qu’une prop ?
+
+- **Prop** = **propriété** que tu passes d’un composant parent à un composant enfant.
+- Elle permet de rendre un composant **dynamique** et **réutilisable**.
+- C’est un peu comme donner des **paramètres à une fonction**, mais pour un composant.
+
+Voici un exemple :
+
+```jsx
+export default function App() {
+
+  return (
+    <div className="p-4 flex flex-col gap-4">
+      {/* Exemple d'utilisation des Legos avec différentes couleurs */}
+      <Lego color="blue" />
+      <Lego color="red" />
+      <Lego color="blue" />
+    </div>
+  )
+}
+
+function Lego(props) { // Ajout des props pour personnaliser les Legos
+  let classes = "h-16 w-32"; // Classes communes à tous les Legos
+
+  // Si la prop color est "blue", on ajoute la classe de fond bleu
+  if (props.color === "blue") {
+    classes += " bg-blue-500";
+  }
+
+  // Si la prop color est "red", on ajoute la classe de fond rouge
+  if (props.color === "red") {
+    classes += " bg-red-500";
+  }
+
+  return <div className={classes}></div>;
+}
+```
+![Aperçu](./images/screenshot_9.png)
