@@ -394,7 +394,7 @@ function Button({ variant, children }) {
 }
 ``` 
 
-## On va créer nos premiers composants
+### On va créer nos premiers composants
 
 Dans `App.jsx` - `src/assets/App.jsx` :
 
@@ -458,3 +458,40 @@ function Lego() {
 Résultat :
 
 ![Aperçu](./images/screenshot_6.png)
+
+On va transformer le bloc rouge pour rendre plus semblable à une brique de lego :
+
+```jsx
+// Modifier la ligne div className
+return (
+    <div className="p-4 flex flex-col gap-4"> {/* Remplacer le bg-red par un padding */}
+      <Lego />
+    </div>
+  )
+```
+
+![Aperçu](./images/screenshot_7.png)
+
+On est a créer notre **premier composant** ! Ce qui veut dire qu'on va pouvoir réutiliser **plusieurs fois**.
+
+Par exemple on peux s'amuser à dupliquer comme ceci :
+
+```jsx
+export default function App() {
+
+  return (
+    <div className="p-4 flex flex-col gap-4">
+      <Lego />
+      {/* On peut dupliquer le composant Lego autant de fois que nécessaire */}
+      <Lego />
+      <Lego />
+      <Lego />
+    </div>
+  )
+}
+
+function Lego() {
+  return <div className="bg-red-500 h-16 w-32"></div>;
+}
+```
+![Aperçu](./images/screenshot_8.png)
