@@ -4,13 +4,13 @@ _Tuto rédigé à partir de la chaîne de [Melvynx](https://www.youtube.com/@mel
 
 _Note : ce tuto se portera uniquement sur Vite + React._
 
-## Table des matières
+# Table des matières
 
 - [1) Qu'est-ce que React ?](#1-Qu'est-ce-que-React-)
 - [2) Les installations](#2-Les-installations)
 - [3) Les composants](#3-Les-composants)
 
-### 1) Qu'est-ce que React ?
+# 1) Qu'est-ce que React ?
 
 **React** est une bibliothèque JavaScript pour construire des interfaces utilisateur interactives. Voici pourquoi j'ai choisi de l'apprendre :
 
@@ -26,10 +26,10 @@ _Note : ce tuto se portera uniquement sur Vite + React._
 
 **En résumé** — React m'enseigne comment structurer une application front-end de façon professionnelle, tout en restant accessible pour un débutant.
 
-### 2) Les installations
+# 2) Les installations
 
-Prériquis :
-- avoir installer Node JS et Tailwind CSS
+Prérequis :
+- avoir installé Node JS et Tailwind CSS
 - créer un projet et installer Vite + React
 
 Pour installer Vite, tape `npm create vite@latest`.
@@ -92,9 +92,11 @@ Voici l'explication du rôle de chaque fichier dans ce projet React + Vite :
 
 **Nous allons retirer l'UI de Vite.**
 
-Dans `App.jsx` - `src/assets/App.jsx` :
+Dans `App.jsx` - `src/App.jsx` :
 
 ```jsx
+//src/App.jsx
+
 // Supprimer tous ces imports
 import { useState } from 'react'
 import reactLogo from './assets/react.svg'
@@ -214,6 +216,7 @@ function App() {
 
       <div className="ticks"></div>
       <section id="spacer"></section>
+      {/* Jusqu'ici */}
     </>
   )
 }
@@ -239,9 +242,9 @@ export default App
 ![Aperçu](./images/screenshot_4.png)
 
 
-**Ensuite on va suprimer `App.css` dans** `src/assets/App.css` **qui était appliqué à l'interface par défaut.**
+**Ensuite on va supprimer `App.css` dans** `src/App.css` **qui était appliqué à l'interface par défaut.**
 
-Puis dans `src/assets/index.css`, **on va retirer tout le contenu du fichier `index.css`**.
+Puis dans `src/index.css`, **on va retirer tout le contenu du fichier `index.css`**.
 
 Pourquoi on supprime les lignes css ? Car nous allons utiliser **Tailwind CSS**.
 
@@ -261,9 +264,11 @@ Se rendre directement dans la doc officielle de Tailwind et suivre les instructi
 
 Lien : https://tailwindcss.com/docs/installation/using-vite
 
-Maintenant qu'on a tailwind, on peux tester dans `App.jsx` - `src/assets/App.jsx` et rajouter une ligne :
+Maintenant qu'on a tailwind, on peut tester dans `App.jsx` - `src/App.jsx` et rajouter une ligne :
 
 ```jsx
+//src/App.jsx
+
 import { useState } from 'react'
 
 function App() {
@@ -283,7 +288,7 @@ On peut voir "Bienvenue sur notre application React !" surligné en rouge :
 
 ![Aperçu](./images/screenshot_5.png)
 
-### 3) Les composants
+# 3) Les composants
 
 **Qu'est-ce qu'un composant React ?**
 
@@ -323,7 +328,7 @@ function Bouton() {
 - **Clarté** : Ton code est organisé et facile à comprendre
 - **Modularité** : Tu peux composer des petits composants pour créer de grands composants
 
-### React vs JavaScript Vanilla
+## React vs JavaScript Vanilla
 
 La différence principale entre **React et JavaScript Vanilla** est la façon de gérer l'UI et l'état.
 
@@ -394,13 +399,15 @@ function Button({ variant, children }) {
 }
 ``` 
 
-### On va créer nos premiers composants
+## On va créer nos premiers composants
 
-Dans `App.jsx` - `src/assets/App.jsx` :
+Dans `App.jsx` - `src/App.jsx` :
 
 Étape 1 :
 
 ```jsx
+//src/App.jsx
+
 // Ajouter export default dans la fonction App
 export default function App() {
 
@@ -419,6 +426,8 @@ export default function App() {
 Étape 2, on va créer un composant lego :
 
 ```jsx
+//src/App.jsx
+
 export default function App() {
 
   return (
@@ -439,6 +448,8 @@ function Lego() {
 Étape 3, démonstration :
 
 ```jsx
+//src/App.jsx
+
 export default function App() {
 
   return (
@@ -459,9 +470,11 @@ Résultat :
 
 ![Aperçu](./images/screenshot_6.png)
 
-On va transformer le bloc rouge pour rendre plus semblable à une brique de lego :
+On va transformer le bloc rouge pour le rendre plus semblable à une brique de lego :
 
 ```jsx
+//src/App.jsx
+
 // Modifier la ligne div className
 return (
     <div className="p-4 flex flex-col gap-4"> {/* Remplacer le bg-red par un padding */}
@@ -474,9 +487,11 @@ return (
 
 On a créé notre **premier composant** ! Ce qui veut dire qu'on va pouvoir réutiliser **plusieurs fois**.
 
-Par exemple, on peux s'amuser à dupliquer plusieurs fois comme ceci :
+Par exemple, on peut s'amuser à dupliquer plusieurs fois comme ceci :
 
 ```jsx
+//src/App.jsx
+
 export default function App() {
 
   return (
@@ -496,7 +511,7 @@ function Lego() {
 ```
 ![Aperçu](./images/screenshot_8.png)
 
-### Un autre concept intéressant en React avec les composants, on peux les faire passer des props (propriétés).
+## Un autre concept intéressant en React avec les composants, on peut les faire passer des props (propriétés).
 
 Qu’est-ce qu’une prop ?
 
@@ -507,11 +522,17 @@ Qu’est-ce qu’une prop ?
 Voici un exemple :
 
 ```jsx
+//src/App.jsx
+
 export default function App() {
 
   return (
     <div className="p-4 flex flex-col gap-4">
-      {/* Exemple d'utilisation des Legos avec différentes couleurs */}
+      {/* Exemple d'utilisation des Legos avec différentes couleurs.
+
+          Comme on le voit ci-dessous, les couleurs : blue, red, blue sont des 
+          propriétés de chaque composant Lego. Ce sont des props ! */}
+
       <Lego color="blue" />
       <Lego color="red" />
       <Lego color="blue" />
@@ -536,3 +557,97 @@ function Lego(props) { // Ajout des props pour personnaliser les Legos
 }
 ```
 ![Aperçu](./images/screenshot_9.png)
+
+**Remarque : React vient éxecuter le composant lego avec des props (les couleurs), puis récupère le résultat et se charge de nous l'afficher.
+
+Plus simple encore, un composant React fonctionne comme une fonction classique.
+On lui passe des **props** (comme des arguments), il génère du JSX en fonction de ces valeurs, puis React affiche le résultat à l’écran. 
+
+On peut faire plus simple, on va créer un **objet** `COLORS` :
+
+```jsx
+//src/App.jsx
+
+export default function App() {
+
+  return (
+    <div className="p-4 flex flex-col gap-4">
+
+      <Lego color="blue" />
+      <Lego color="red" />
+      <Lego color="blue" />
+    </div>
+  )
+}
+
+// On peut aussi définir un objet pour stocker les classes de couleurs, 
+// ce qui rend le code plus propre et plus facile à maintenir.
+const COLORS = {
+  blue: "bg-blue-500",
+  red: "bg-red-500",
+}
+
+function Lego(props) {
+  return <div className={`h-16 w-32 ${COLORS[props.color]}`}></div>;
+}
+```
+
+## Créer des props par défault
+
+**Problématique : que se passerait-il une prop n'est pas définie ?
+
+Exemple : 
+
+```jsx
+//src/App.jsx
+
+export default function App() {
+
+  return (
+    <div className="p-4 flex flex-col gap-4">
+
+      <Lego color="blue" />
+      <Lego color="red" />
+      <Lego /> {/* Ici */}
+      <Lego color="blue" />
+    </div>
+  )
+}
+```
+
+`<Lego /> {/* Ici */}` cette prop créer une brique sans couleur car elle n'est pas définie.
+
+**Ce qu'on veut faire ?** C'est d'ajouter une prop par défaut.
+
+Pour se faire, on va utiliser la déstructuration.
+
+```jsx
+//src/App.jsx
+
+// En dessous de const COLORS
+
+function Lego(props) {
+  const { color } = props; // Ici, on va déstructurer l'objet en JS pour récupérer une variable. 
+  console.log(color); // Pour afficher la sortie des couleurs dans la console du navigateur
+  return <div className={`h-16 w-32 ${COLORS[props.color]}`}></div>;
+}
+```
+Dans la console :
+
+![Aperçu](./images/screenshot_10.png)
+
+La ligne `const { color } = props;` “déstructure” l’objet props.
+C’est comme dire : “Prends la propriété color de l’objet props et mets-la dans une variable appelée color”.
+
+**Mais** au lieu de faire ça dans une autre ligne, on peux aussi faire : 
+
+```jsx
+//src/App.jsx
+
+// En dessous de const COLORS
+
+function Lego({color = "red"}) { // Ça rajoute la valeur par défaut "red"
+  return <div className={`h-16 w-32 ${COLORS[color]}`}></div>; // enlève le "props." devant "color" pour utiliser la variable locale
+}
+```
+![Aperçu](./images/screenshot_11.png)
