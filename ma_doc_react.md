@@ -594,7 +594,7 @@ function Lego(props) {
 
 ## Créer des props par défault
 
-**Problématique : que se passerait-il une prop n'est pas définie ?
+**Problématique : que se passerait-il si une prop n'est pas définie ?
 
 Exemple : 
 
@@ -615,7 +615,7 @@ export default function App() {
 }
 ```
 
-`<Lego /> {/* Ici */}` cette prop créer une brique sans couleur car elle n'est pas définie.
+`<Lego /> {/* Ici */}` cette prop crée une brique sans couleur car elle n'est pas définie.
 
 **Ce qu'on veut faire ?** C'est d'ajouter une prop par défaut.
 
@@ -651,3 +651,250 @@ function Lego({color = "red"}) { // Ça rajoute la valeur par défaut "red"
 }
 ```
 ![Aperçu](./images/screenshot_11.png)
+
+Mais encore, on peut ajouté autant de props par défaut qu'on souhaite. Par exemple :
+
+```jsx
+// src/App.jsx
+
+export default function App() {
+
+  return (
+    <div className="p-4 flex flex-col gap-4">
+      <Lego color="blue" />
+      <Lego color="red" size="lg" /> 
+      <Lego />
+      <Lego color="blue" />
+    </div>
+  )
+}
+
+const COLORS = {
+  blue: "bg-blue-500",
+  red: "bg-red-500",
+}
+
+// Ici size, une nouvelle prop
+const SIZE = {
+  sm: "w-32",
+  lg: "w-44",
+};
+
+function Lego({color = "red", size = "sm" }) {  // On peut rajouter une nouvelle prop "size"
+  return <div className={`h-16 w-32 ${COLORS[color]} ${SIZE[size]}`}></div>; // Rajout de SIZE
+}
+```
+
+Grâce à size, on peux faire ça :
+
+```jsx
+// src/App.jsx
+
+export default function App() {
+
+  return (
+    <div className="p-4 flex flex-col gap-4">
+      <Lego color="blue" />
+      <Lego color="red" size="lg" /> {/* Par exemple */}
+      <Lego />
+      <Lego color="blue" />
+    </div>
+  )
+}
+
+const COLORS = {
+  blue: "bg-blue-500",
+  red: "bg-red-500",
+}
+
+const SIZE = {
+  sm: "w-32",
+  lg: "w-44",
+};
+
+function Lego({color = "red", size = "sm" }) {
+  return <div className={`h-16 ${COLORS[color]} ${SIZE[size]}`}></div>; // Enlever w-32
+}
+```
+
+![Aperçu](./images/screenshot_12.png)
+
+Voilà, on peux s'amuser à faire changer la taille et la couleur du lego en fonction de l'état du composant, ou même faire un composant qui affiche une pile de legos !
+
+```jsx
+// src/App.jsx
+
+export default function App() {
+
+  return (
+    <div className="p-4 flex flex-col gap-4">
+      <Lego color="blue" />
+      <Lego color="red" size="lg" />
+      <Lego size="lg" />
+      <Lego color="green" size="md" />
+      <Lego color="yellow" size="lg" />
+    </div>
+  )
+}
+
+const COLORS = {
+  blue: "bg-blue-500",
+  red: "bg-red-500",
+  green: "bg-green-500",
+  yellow: "bg-yellow-500",
+}
+
+const SIZE = {
+  sm: "w-32",
+  md: "w-40",
+  lg: "w-44",
+};
+
+function Lego({color = "red", size = "sm" }) {
+  return <div className={`h-16 ${COLORS[color]} ${SIZE[size]}`}></div>;
+}
+```
+![Aperçu](./images/screenshot_13.png)
+
+
+**La puissance des composants, c'est donc d'utiliser de la logique à plusieurs endroits !**
+
+
+## Les éléments enfants
+
+Il est possible d'ajouter du contenu à nos composants et pour rajouter ces contenus, on utilise une prop spéciale appelée `children`.
+
+```jsx
+// src/App.jsx
+
+// Après const SIZE = {
+
+function Lego({color = "red", size = "sm", children}) { //Ajout du paramètre children
+  return <div className={`h-16 ${COLORS[color]} ${SIZE[size]}`}></div>; // Ajout de {children}
+}
+```
+
+On ajoute du contenu :
+
+```jsx
+// src/App.jsx
+
+// Après const SIZE = {
+
+function Lego({color = "red", size = "sm", children}) { //Ajout du paramètre children
+  return <div className={`h-16 flex items-center justify-center ${COLORS[color]} ${SIZE[size]}`}>4 + 4</div>; // Ajout de {children}
+```
+![Aperçu](./images/screenshot_14.png)
+
+Chaque brique affiche "**4 + 4**" à l'intérieur. Pour que 4 + 4 = `8` à l'intérieur, on met le contenu à **l'intérieur** des accolades. Les `{ }` permet d'écrire du code **JavaScript** et donc d'effectuer de la logique.   
+
+```jsx
+// src/App.jsx
+
+// Après const SIZE = {
+
+function Lego({color = "red", size = "sm", children}) { //Ajout du paramètre children
+  return <div className={`h-16 flex items-center justify-center ${COLORS[color]} ${SIZE[size]}`}>{4 + 4}</div>; // Ajout de {children}
+}
+```
+![Aperçu](./images/screenshot_15.png)
+
+On peut aussi faire d'une autre manière :
+
+```jsx
+// src/App.jsx
+
+export default function App() {
+
+  return (
+    <div className="p-4 flex flex-col gap-4">
+      <Lego color="blue" >Toto</Lego> {/* <-- Affichage du contenu passé en tant qu'enfant */}
+      <Lego color="red" size="lg" />
+      <Lego size="lg" />
+      <Lego color="green" size="md" />
+      <Lego color="yellow" size="lg" />
+    </div>
+  )
+}
+
+const COLORS = {
+  blue: "bg-blue-500",
+  red: "bg-red-500",
+  green: "bg-green-500",
+  yellow: "bg-yellow-500",
+}
+
+const SIZE = {
+  sm: "w-32",
+  md: "w-40",
+  lg: "w-44",
+};
+
+function Lego({color = "red", size = "sm", children}) {
+  return <div className={
+    `h-16 flex items-center justify-center 
+    ${COLORS[color]} 
+    ${SIZE[size]}`}>
+      {children} {/* Affichage du contenu passé en tant qu'enfant */}
+    </div>;
+}
+```
+![Aperçu](./images/screenshot_16.png)
+
+**Ce qu’on écrit entre les balises d’un composant est automatiquement passé dans une prop spéciale appelée `children`.**
+
+Comme ici :
+```jsx
+<Lego color="blue">Toto</Lego>
+```
+- `color="blue"` → prop classique
+- `Toto` → contenu enfant → stocké dans children
+
+**Comment React interprète ça ?**
+
+```jsx
+<Lego color="blue">Toto</Lego>
+```
+Devient en interne (en JS) :
+```jsx
+{
+  color: "blue",
+  children: "Toto"
+}
+```
+
+Dans ton composant :
+
+```jsx
+function Lego({ color = "red", size = "sm", children }) {
+```
+Tu récupères :
+- `color`
+- `size`
+- `children` (le contenu entre les balises)
+
+Et tu l’affiches ici :
+
+```jsx
+return (
+  <div className={`h-16 flex items-center justify-center ${COLORS[color]} ${SIZE[size]}`}>
+    {children}
+  </div>
+);
+```
+`{children}` = affiche le contenu passé dans le composant
+
+En gros, children c’est simplement ce qu’il y a entre `<Lego> ... </Lego>.`
+React le passe automatiquement au composant, et on peut l’afficher avec {children}.
+
+**Bonus (très important)**
+
+Tous les composants peuvent recevoir children, même si tu ne le déclares pas.
+
+Par exemple :
+
+```jsx
+function Lego({ children }) {
+  return <div>{children}</div>;
+}
+```
