@@ -9,6 +9,7 @@ _Note : ce tuto se portera uniquement sur Vite + React._
 - [1) Qu'est-ce que React ?](#1-Qu'est-ce-que-React-)
 - [2) Les installations](#2-Les-installations)
 - [3) Les composants](#3-Les-composants)
+- [4) Les States](#4-Les-States)
 
 # 1) Qu'est-ce que React ?
 
@@ -29,7 +30,7 @@ _Note : ce tuto se portera uniquement sur Vite + React._
 # 2) Les installations
 
 Prérequis :
-- avoir installé Node JS et Tailwind CSS
+- avoir installé Node JS et Tailwind (optionnel mais on l'utilisera dans ce tutoriel)
 - créer un projet et installer Vite + React
 
 Pour installer Vite, tape `npm create vite@latest`.
@@ -831,12 +832,13 @@ const SIZE = {
 };
 
 function Lego({color = "red", size = "sm", children}) {
-  return <div className={
-    `h-16 flex items-center justify-center 
-    ${COLORS[color]} 
-    ${SIZE[size]}`}>
+  return (
+    <div 
+      className={`h-16 flex items-center justify-center ${COLORS[color]} ${SIZE[size]}`}
+    >
       {children} {/* Affichage du contenu passé en tant qu'enfant */}
-    </div>;
+    </div>
+  );
 }
 ```
 ![Aperçu](./images/screenshot_16.png)
@@ -898,3 +900,128 @@ function Lego({ children }) {
   return <div>{children}</div>;
 }
 ```
+
+## LA prop onClick
+
+La prop `onClick`est l'une des **plus utilisée** de React. Elle nous permet **d'effectuer une action**. 
+
+Exemple : 
+
+```jsx
+// src/App.jsx
+
+export default function App() {
+
+  return (
+    <div className="p-4 flex flex-col gap-4">
+      <Lego color="blue" >Toto</Lego>
+      <Lego color="red" size="lg" />
+
+      <Lego size="lg">
+        {/* Ajouter un bouton dans le contenu */}
+        <button
+          onClick={() => {  {/* Ajout du prop onClick */ }
+            console.log("Click on the red button !");
+          }}
+        >Bouton</button>
+      </Lego>
+
+      <Lego color="green" size="md" />
+      <Lego color="yellow" size="lg" />
+    </div>
+  )
+}
+```
+
+Comment tu vois dans la capture d'écran, la console affiche le message quand on appuie sur le bouton.
+
+![Aperçu](./images/screenshot_17.png)
+
+**Et comment faire passer sur les composants ?**
+
+Exemple pour comment faire en sort que la div ici sache qu'elle est cliquée :
+
+```jsx
+// src/App.jsx
+
+// Tout en dessous
+
+    <div 
+      className={`h-16 flex items-center justify-center ${COLORS[color]} ${SIZE[size]}`}
+    >
+      {children}
+    </div>
+```
+On ajoute bien évidemment la prop `onClick` :
+
+```jsx
+function Lego({color = "red", size = "sm", children, onClick}) { // <-- Ajout du prop onClick
+  return (
+    <div 
+      className={`h-16 flex items-center justify-center ${COLORS[color]} ${SIZE[size]}`}
+      // Utilisation du prop onClick
+      onClick={() => {
+        onClick?.(); // <-- On appelle la fonction onClick si elle est définie
+      }} 
+    >
+      {children}
+    </div>
+  );
+}
+```
+
+Au niveaux des composant, on peux rajouter onClick sur Toto par exemple :
+
+```jsx
+// src/App.jsx
+
+export default function App() {
+
+  return (
+    <div className="p-4 flex flex-col gap-4">
+      {/* Modifier ici */}
+      <Lego 
+        color="blue" 
+        onClick={() =>{
+          console.log("Toto clicked !");
+        }}
+      >
+        Toto
+      </Lego> 
+      <Lego color="red" size="lg" />
+      <Lego size="lg">
+        <button
+          className="border bg-zinc-900 text-white rounded-md px-2 py-1"
+          onClick={() => {
+            console.log("Click on the red button !");
+          }}
+        >Bouton</button>
+      </Lego>
+
+      <Lego color="green" size="md" />
+      <Lego color="yellow" size="lg" />
+    </div>
+  )
+}
+```
+
+##Conclusion##
+
+Les composants sont le **cœur de React**. Ce sont eux qui te permettent de construire ton interface de manière **modulaire, réutilisable et dynamique**.
+
+Au lieu d’écrire du code répétitif, tu découpes ton application en **petits blocs indépendants** que tu peux assembler comme des briques Lego 🧱.
+
+Grâce aux composants, tu peux :
+
+- Réutiliser ton code facilement
+- Passer des données avec les props
+- Rendre ton interface dynamique avec la logique JavaScript
+- Gérer les interactions avec des événements comme onClick
+- Composer des interfaces complexes à partir de petits éléments simples
+
+En résumé :
+**React = assembler des composants + leur passer des données + gérer les interactions**
+
+Plus tu maîtrises les composants, plus tu deviens rapide et efficace en React !
+
+# 4) Les States
