@@ -1005,7 +1005,7 @@ export default function App() {
 }
 ```
 
-##Conclusion##
+## Conclusion ##
 
 Les composants sont le **cœur de React**. Ce sont eux qui te permettent de construire ton interface de manière **modulaire, réutilisable et dynamique**.
 
