@@ -1045,7 +1045,7 @@ La valeur principale qu'on va utiliser est `useState`.
 const [state, setState] = useState(initialValue);
 ```
 
-- 1) On appelle la **méthode** `useState()`, la **valeur initiale**. `useState` est également un `hook` de React mais on verra dans les chapitres suivants
+- 1) On appelle la **méthode** `useState()`, la **valeur initiale**. `useState` est également un `hook` de React mais on verra dans le chapitre sur les hooks
 
 - 2) On a `state`, un **getter** qui permet de **récupérer, de lire et d'afficher la donnée** 
 
@@ -1126,6 +1126,12 @@ function Lego({color = "red", size = "sm", children, onClick}) {
 
 Ce qui s'est passé avec `setValue` est ce qu'on appelle un `render`.  
 
+## Render, c'est quoi ?
+
+Le **render** est le processus par lequel React exécute un composant pour générer le JSX à afficher dans le DOM. Chaque fois qu'un **state** ou une **prop** change, React **re-render** le composant pour mettre à jour l'interface utilisateur.
+
+Voici ce qu'on a fait dans notre composant Lego :
+
 **1) Le rendu initial**
 Quand tu charges ton composant :
 
@@ -1179,3 +1185,149 @@ Dans notre exemple :
 - Clique → `setValue(value + 10)`
 - Re-render → `value = 10`
 - Affichage mis à jour automatiquement
+
+**On va faire un debug pour mieux comprendre :**
+
+```jsx
+// src/App.jsx
+
+import { useState } from "react";
+
+export default function App() {
+
+  return (
+    <div className="p-4 flex flex-col gap-4">
+      <Lego color="blue">Hey !</Lego>
+    </div>
+  )
+}
+
+const COLORS = {
+  blue: "bg-blue-500",
+  red: "bg-red-500",
+  green: "bg-green-500",
+  yellow: "bg-yellow-500",
+}
+
+const SIZE = {
+  sm: "w-32",
+  md: "w-40",
+  lg: "w-44",
+};
+
+// *********************************************************************
+// ------------------------------ Render -------------------------------
+// *********************************************************************
+
+function Lego({color = "red", size = "sm", children, onClick}) {
+  const [value, setValue] = useState(95); // 95 valeur initial
+
+  console.log("Render", value); // Debug : affiche la valeur à chaque rendu
+  return (
+    <div 
+      className={`h-16 flex items-center justify-center ${COLORS[color]} ${SIZE[size]}`}
+      onClick={() => {
+        onClick?.();
+
+        console.log("before", value); // Debug : affiche la valeur avant la mise à jour
+        setValue(value + 1);
+        if (value > 100) {
+          setValue(value + 1);
+        }
+
+        console.log("after", value); // Debug : affiche la valeur après la mise à jour (mais elle n'est pas encore mise à jour dans ce rendu)
+      }} 
+    >
+      {value}
+      <br />
+      {children}
+    </div>
+  );
+}
+```
+Quand tu cliques plusieurs fois, tu verras que la valeur affichée dans la console ne change pas immédiatement après `setValue` car `setValue` est asynchrone et ne met à jour la valeur que lors du prochain render.
+
+Ce qui s'affiche dans la console :
+
+```
+Render 95
+before 95
+after 95
+Render 96
+before 96
+after 96
+Render 97
+before 97
+after 97
+Render 98
+before 98
+after 98
+Render 99
+before 99
+after 99
+Render 100
+before 100
+after 100
+Render 101
+before 101
+after 101
+```
+
+Etc...
+
+On remarque d'ailleurs que la valeur de before et after est **la même dans chaque clic**, et **attendent le prochain render pour être mise à jour**. Ce qui montre que `setValue` ne met pas à jour la valeur immédiatement.
+
+Autre problème, lorsque `value` dépasse 100, on veut ajouter 1 de plus, mais comme `setValue` est asynchrone, la condition `if (value > 100)` ne se met pas à jour immédiatement et ne fonctionne pas comme prévu.
+
+**Ça tombe bien,** une deuxième syntaxe **très importante à connaître** c'est le **callback** dans le **setter** :
+
+```jsx
+// *********************************************************************
+// ------------------------------ Render -------------------------------
+// *********************************************************************
+
+function Lego({color = "red", size = "sm", children, onClick}) {
+  const [value, setValue] = useState(95); // 95 valeur initial
+
+  console.log("Render", value); // Debug : affiche la valeur à chaque rendu
+  return (
+    <div 
+      className={`h-16 flex items-center justify-center ${COLORS[color]} ${SIZE[size]}`}
+      onClick={() => {
+        onClick?.();
+
+        console.log("before", value); // Debug : affiche la valeur avant la mise à jour
+        setValue(value + 1);
+        if (value > 100) {
+
+          // Modifier ici
+
+          // Utiliser la fonction de mise à jour pour accéder à la valeur actuelle
+          setValue(current => { 
+            // Debug : affiche la valeur actuelle avant la mise à jour
+            console.log("Current", current); 
+            // On retourne la valeur mise à jour
+            return current + 1; 
+          }); 
+        }
+
+        console.log("after", value); // Debug : affiche la valeur après la mise à jour (mais elle n'est pas encore mise à jour dans ce rendu)
+      }} 
+    >
+      {value}
+      <br />
+      {children}
+    </div>
+  );
+}
+```
+Cette syntaxe est rarement utilisée, mais elle est très importante à connaître car elle permet d'accéder à la valeur actuelle du state au moment de la mise à jour, ce qui est crucial dans certains cas (comme les mises à jour basées sur la valeur précédente).
+
+## Conclusion
+
+Les states sont ce qui rend ton application **interactives et dynamiques**. Grâce à `useState`, tu peux créer des variables qui changent au fil du temps et faire en sorte que ton interface se mette à jour automatiquement.
+
+Le processus de **render** est au cœur de React : c’est lui qui exécute ton composant pour générer le JSX à afficher. Chaque fois que tu modifies un state, React refait un render pour mettre à jour l’interface.
+
+En maîtrisant les states et les renders, tu peux créer des applications réactives où l’interface change en fonction des actions de l’utilisateur, des données qui arrivent, ou de n’importe quelle logique que tu souhaites implémenter.
+
