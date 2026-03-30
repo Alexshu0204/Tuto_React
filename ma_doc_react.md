@@ -901,7 +901,7 @@ function Lego({ children }) {
 }
 ```
 
-## LA prop onClick
+## La prop onClick
 
 La prop `onClick`est l'une des **plus utilisée** de React. Elle nous permet **d'effectuer une action**. 
 
@@ -933,13 +933,13 @@ export default function App() {
 }
 ```
 
-Comment tu vois dans la capture d'écran, la console affiche le message quand on appuie sur le bouton.
+Comme tu vois dans la capture d'écran, la console affiche le message quand on appuie sur le bouton.
 
 ![Aperçu](./images/screenshot_17.png)
 
 **Et comment faire passer sur les composants ?**
 
-Exemple pour comment faire en sort que la div ici sache qu'elle est cliquée :
+Exemple à comment faire en sort que la div ici sache qu'elle est cliquée :
 
 ```jsx
 // src/App.jsx
@@ -1025,3 +1025,157 @@ En résumé :
 Plus tu maîtrises les composants, plus tu deviens rapide et efficace en React !
 
 # 4) Les States
+
+Nous passons à l'étape la **plus importante** de React. Les states, ce sont ceux qui rendent l'app **vivante**.
+
+**C’est quoi un state ?**
+
+Un `state`, c’est simplement :
+
+👉 une **variable qui peut changer**
+👉 et qui **met à jour l’interface** automatiquement
+
+À la différence entre les **props** et les **states**, les props paramèttrent les composants tandis que les states permettent de **transformer les composants "statiques" en composants qui seront dynamiques**.
+
+La valeur principale qu'on va utiliser est `useState`.
+
+`useState` présente une syntaxe en 3 parties :
+
+```jsx
+const [state, setState] = useState(initialValue);
+```
+
+- 1) On appelle la **méthode** `useState()`, la **valeur initiale**. `useState` est également un `hook` de React mais on verra dans les chapitres suivants
+
+- 2) On a `state`, un **getter** qui permet de **récupérer, de lire et d'afficher la donnée** 
+
+- 3) On a `setState`, **un setter** qui est une fonction pour **modifier la valeur** ( on appelle également ça en React, un `render`)
+
+Dans `App.jsx` - `src/App.jsx`, toujours sur les composants lego :
+
+```jsx
+// src/App.jsx
+
+import { useState } from "react";
+
+export default function App() {
+
+  return (
+    <div className="p-4 flex flex-col gap-4">
+      {/* -------------- Nouvelle prop -------------- */}
+      <Lego color="blue">Hey !</Lego>
+    </div>
+  )
+}
+
+const COLORS = {
+  blue: "bg-blue-500",
+  red: "bg-red-500",
+  green: "bg-green-500",
+  yellow: "bg-yellow-500",
+}
+
+const SIZE = {
+  sm: "w-32",
+  md: "w-40",
+  lg: "w-44",
+};
+
+function Lego({color = "red", size = "sm", children, onClick}) {
+  // -------------- Ajout d'un state conteur --------------
+  const [value, setValue] = useState(0);
+  return (
+    <div 
+      className={`h-16 flex items-center justify-center ${COLORS[color]} ${SIZE[size]}`}
+      onClick={() => {
+        onClick?.();
+      }} 
+    >
+      {value} {/* <-- Ajouter value avant children */}
+      <br />
+      {children}
+    </div>
+  );
+}
+```
+
+![Aperçu](./images/screenshot_18.png)
+
+Lorsqu'on click sur le composant, la valeur ajoute 10 : 
+
+```jsx
+function Lego({color = "red", size = "sm", children, onClick}) {
+  const [value, setValue] = useState(0);
+  return (
+    <div 
+      className={`h-16 flex items-center justify-center ${COLORS[color]} ${SIZE[size]}`}
+      onClick={() => {
+        onClick?.();
+
+
+        setValue(value + 10); // <-- Incrémenter le compteur 
+      }} 
+    >
+      {value}
+      <br />
+      {children}
+    </div>
+  );
+}
+```
+
+Ce qui s'est passer avec `setValue` est ce qu'on appelle un `render`.  
+
+**1) Le rendu initial**
+Quand tu charges ton composant :
+
+```jsx
+<Lego color="blue">Hey !</Lego>
+```
+
+React fait ceci :
+- Il exécute ta fonction Lego
+- Il lit `const [value, setValue] = useState(0)` → valeur initiale = 0
+- Il retourne le JSX :
+
+```jsx
+<div className="h-16 ...">0<br />Hey !</div>
+```
+
+- React met ça dans le **DOM réel** (ce que tu vois à l’écran)
+
+C’est ce qu’on appelle le **first render** (premier rendu).
+
+**2)Quand tu cliques**
+Tu as ceci dans le `onClick` :
+
+```jsx
+setValue(value + 10);
+```
+
+- React **ne modifie pas directement le DOM.**
+- Il **refait exécuter ton composant** (appelé **re-render**) avec la nouvelle valeur `value = 10`.
+- Ton JSX est recalculé avec `value = 10` :
+
+```jsx
+<div className="h-16 ...">10<br />Hey !</div>
+```
+
+- React compare l’ancien rendu et le nouveau rendu (**diffing**) et ne met à jour que ce qui a changé dans le DOM.
+
+**3) Pourquoi c’est cool**
+- Tu n’as **pas besoin** de faire `document.getElementById()` ou `innerHTML`
+- React **s’occupe de tout** : calculer ce qui change et mettre à jour le DOM efficacement
+- Ton composant peut être **réutilisé partout**, chacun avec son propre `state` qui déclenche son propre render
+
+**4) Résumé simple**
+
+**Render = l’action de React qui exécute ton composant pour créer le JSX à afficher dans le DOM**
+- Premier render = affichage initial
+- Re-render = React ré-exécute ton composant après un changement de state ou de props
+
+Dans notre exemple :
+- Premier render → `value = 0`
+- Clique → `setValue(value + 10)`
+- Re-render → `value = 10`
+- Affichage mis à jour automatiquement
