@@ -247,7 +247,7 @@ export default App
 
 Puis dans `src/index.css`, **on va retirer tout le contenu du fichier `index.css`**.
 
-Pourquoi on supprime les lignes css ? Car nous allons utiliser **Tailwind CSS**.
+Pourquoi on supprime les lignes CSS ? Car nous allons utiliser **Tailwind CSS**.
 
 **La raison ?**
 
@@ -686,7 +686,7 @@ function Lego({color = "red", size = "sm" }) {  // On peut rajouter une nouvelle
 }
 ```
 
-Grâce à size, on peux faire ça :
+Grâce à size, on peut faire ça :
 
 ```jsx
 // src/App.jsx
@@ -720,7 +720,7 @@ function Lego({color = "red", size = "sm" }) {
 
 ![Aperçu](./images/screenshot_12.png)
 
-Voilà, on peux s'amuser à faire changer la taille et la couleur du lego en fonction de l'état du composant, ou même faire un composant qui affiche une pile de legos !
+Voilà, on peut s'amuser à changer la taille et la couleur du lego en fonction de l'état du composant, ou même faire un composant qui affiche une pile de legos !
 
 ```jsx
 // src/App.jsx
@@ -939,7 +939,7 @@ Comme tu vois dans la capture d'écran, la console affiche le message quand on a
 
 **Et comment faire passer sur les composants ?**
 
-Exemple à comment faire en sort que la div ici sache qu'elle est cliquée :
+Exemple de comment faire en sorte que la div ici sache qu'elle est cliquée :
 
 ```jsx
 // src/App.jsx
@@ -970,7 +970,7 @@ function Lego({color = "red", size = "sm", children, onClick}) { // <-- Ajout du
 }
 ```
 
-Au niveaux des composant, on peux rajouter onClick sur Toto par exemple :
+Au niveau des composant, on peux rajouter `onClick` sur Toto par exemple :
 
 ```jsx
 // src/App.jsx
@@ -1005,7 +1005,7 @@ export default function App() {
 }
 ```
 
-## Conclusion ##
+## Conclusion
 
 Les composants sont le **cœur de React**. Ce sont eux qui te permettent de construire ton interface de manière **modulaire, réutilisable et dynamique**.
 
@@ -1026,16 +1026,16 @@ Plus tu maîtrises les composants, plus tu deviens rapide et efficace en React !
 
 # 4) Les States
 
-Nous passons à l'étape la **plus importante** de React. Les states, ce sont ceux qui rendent l'app **vivante**.
+Nous passons à l'étape la **plus importante** de React. Les states, c'est ce qui rend l'app **vivante**.
 
 **C’est quoi un state ?**
 
 Un `state`, c’est simplement :
 
-👉 une **variable qui peut changer**
-👉 et qui **met à jour l’interface** automatiquement
+- une **variable qui peut changer**
+- et qui **met à jour l’interface** automatiquement
 
-À la différence entre les **props** et les **states**, les props paramèttrent les composants tandis que les states permettent de **transformer les composants "statiques" en composants qui seront dynamiques**.
+À la différence entre les **props** et les **states**, les props paramètrent les composants tandis que les states permettent de **transformer les composants "statiques" en composants dynamiques**.
 
 La valeur principale qu'on va utiliser est `useState`.
 
@@ -1101,7 +1101,7 @@ function Lego({color = "red", size = "sm", children, onClick}) {
 
 ![Aperçu](./images/screenshot_18.png)
 
-Lorsqu'on click sur le composant, la valeur ajoute 10 : 
+Lorsqu'on clique sur le composant, la valeur s'ajoute de 10 : 
 
 ```jsx
 function Lego({color = "red", size = "sm", children, onClick}) {
@@ -1124,7 +1124,7 @@ function Lego({color = "red", size = "sm", children, onClick}) {
 }
 ```
 
-Ce qui s'est passer avec `setValue` est ce qu'on appelle un `render`.  
+Ce qui s'est passé avec `setValue` est ce qu'on appelle un `render`.  
 
 **1) Le rendu initial**
 Quand tu charges ton composant :
@@ -1146,7 +1146,7 @@ React fait ceci :
 
 C’est ce qu’on appelle le **first render** (premier rendu).
 
-**2)Quand tu cliques**
+**2) Quand tu cliques**
 Tu as ceci dans le `onClick` :
 
 ```jsx
